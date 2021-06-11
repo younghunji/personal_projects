@@ -1,0 +1,617 @@
+---
+title: Gender Research Productivity Gap - Visualizations Using GGPlot
+author: "Young Hun Ji"
+date: "6/9/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+### Background
+This markdown contains the R scripts I used to **visualize the gender productivity gap in STEM and other scientific fields**. Note that this data was collected as part of my PhD dissertation at the George Washington University. In addition, a study based on my dissertation research was published in *Journal of Applied Psychology* in 2018: <http://dx.doi.org/10.1037/apl0000331>. Accordingly, a detailed discussion of all of the samples, procedures, and measures, in addition to study findings and theoretical perspectives, are included in the published article. The article (as well as all of the datasets used) are available on my GitHub portfolio: (1) [link to the published article](https://github.com/bloonsinthesky/Data-Science-Portfolio/raw/main/Gender%20Research%20Productivity%20Gap/Gender%20Productivity%20Gap%20among%20Stars_JAP%20Article.pdf), (2) [link to my portfolio](https://github.com/bloonsinthesky/Data-Science-Portfolio).
+
+### Data and Sample
+I collected research productivity data on individual researchers in the Mathematics, Genetics, Applied Psychology, and Mathematical Psychology fields. The samples included every researcher **who published at least one article** in one of the **top 5 most influential journals** (i.e., most highly cited journals) in his or her respective field during the 10-year time window **from 2006 to 2015**. For each individual in the sample, I measured **research productivity** by counting the total number of papers he or she published in those same top-tier journals during the same time period from 2006 to 2015. The sample sizes were as follows: 
+
+* Study 1 included 3,853 researchers who published 3,161 articles in mathematics.
+* Study 2 included 45,007 researchers who published 7,746 articles in genetics.
+* Study 3 included 4,081 researchers who published 2,807 articles in applied psychology and 6,337 researchers who published 3,796 articles in mathematical psychology.
+
+### Data Visualization Process
+To examine the magnitude of the gender productivity gap, I first performed visual comparisons of the productivity distributions by gender. This visual inspection was the first step of the examination, and it was then followed by more advanced statistical analyses of each distribution's properties (not included in this markdown)—again, these analyses are explained at full length in the published article.
+
+I visualized each gender's productivity distributions using **histograms** and **kernel density plots**. Overall, findings revealed that **there was a considerable gender productivity gap among stars in favor of men** across fields. Specifically, the under-representation of women was more extreme at the more elite ranges of performance (i.e., right tails of the distributions). 
+
+
+## Loading Dependencies
+
+First, I loaded all dependencies required for the visualizations.
+
+```{r library}
+# Loading dependencies
+library(gridExtra)
+library(ggplot2)
+```
+
+## Loading Datasets
+
+Each of the following data files contains two columns: (1) Total publications (i.e., count of publications for each individual researcher), and (2) Gender of the individual. For each study there are three data files: one containing all researchers in the sample, one containing the women only, and one containing the men only.
+
+```{r data}
+# Loading datasets
+## Study 1: Mathematics
+s1_math_all <- read.csv(file.choose(), header = TRUE)
+s1_math_f <- read.csv(file.choose(), header = TRUE)
+s1_math_m <- read.csv(file.choose(), header = TRUE)
+## Study 2: Genetics
+s2_gen_all <- read.csv(file.choose(), header = TRUE)
+s2_gen_f <- read.csv(file.choose(), header = TRUE)
+s2_gen_m <- read.csv(file.choose(), header = TRUE)
+## Study 3a: Applied Psychology
+s3_app_psy_all <- read.csv(file.choose(), header = TRUE)
+s3_app_psy_f <- read.csv(file.choose(), header = TRUE)
+s3_app_psy_m <- read.csv(file.choose(), header = TRUE)
+## Study 3b: Mathematical Psychology
+s3_mat_psy_all <- read.csv(file.choose(), header = TRUE)
+s3_mat_psy_f <- read.csv(file.choose(), header = TRUE)
+s3_mat_psy_m <- read.csv(file.choose(), header = TRUE)
+```
+
+## Study 1: Mathematics
+
+The field of mathematics is one of the most male-dominated disciplines within STEM and represents a domain where some of the most extreme gender productivity gaps might be observed. For example, only 7.3% of full professor positions in the field of mathematics are occupied by women (Ceci & Williams, 2010). The sample size was *N* = 3,853 unique researchers, of whom 360 (9.3%) were women.
+
+### Histograms
+
+I started by creating histograms of the productivity distributions of women versus men. Note that I standardized the axes for both genders for an accurate comparison. 
+
+```{r S1 histograms}
+# Study 1 Histograms
+## Women
+hist_s1f <- ggplot(s1_math_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 2500, 500), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(0,20,2)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 2500), xlim = c(1.5, 20)) + 
+  ggtitle("Women's Publications in Mathematics") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11))
+## Men
+hist_s1m <- ggplot(s1_math_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 2500, 500), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(0,20,2)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 2500), xlim = c(1.5, 20)) + 
+  ggtitle("Men's Publications in Mathematics") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11))
+## Plotting
+grid.arrange(hist_s1f, hist_s1m, ncol = 2)
+```
+
+As shown, both of the distributions are **"right-tail heavy."** In other words, regardless of gender, the majority of individuals publish only a few articles (i.e., below the mean), with a small percentage of "star performers" publishing at rates far greater than the others. 
+
+But in the histograms above, it is not easy to see the right tails clearly. Thus, I recreated the histograms but with a close-up of the right tails.
+
+```{r S1 histograms close}
+# Study 1 Histograms (close-up of right tails)
+## Women (pubs = 4 or more)
+hist_s1f_close <- ggplot(s1_math_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 140, 20), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(4,20,1)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 140), xlim = c(4.3, 20)) + 
+  ggtitle("Women's Publications in Mathematics
+          (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Men (pubs = 4 or more)
+hist_s1m_close <- ggplot(s1_math_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 140, 20), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(4,20,1)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 140), xlim = c(4.3, 20)) + 
+  ggtitle("Men's Publications in Mathematics
+          (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Plotting
+grid.arrange(hist_s1f_close, hist_s1m_close, ncol = 2)
+```
+
+Now it is easier to see the right tails. As show, the distributions' right tail falls more heavily for men than for women. This implies that there is a **substantial gender gap (in favor of men) at the higher ranges of individual productivity**.
+
+### Kernel Density Plots
+
+In addition to histograms, I created kernel density plots for both women and men.
+
+```{r S1 KDE}
+# Study 1 Kernel density plots
+ggplot(s1_math_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") + 
+  theme(axis.title = element_text(face="bold", size=14)) + 
+  theme(legend.text=element_text(size=14),
+        legend.title = element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) + 
+  scale_color_manual(values = c("green4","darkblue")) +
+  ggtitle("Publications in Mathematics by Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+Again, the distributions have heavy right tails, but it not easy to compare them visually. So I recreated the plots but with a close-up on the right tails.
+
+```{r S1 KDE close}
+# Study 1 Kernel density plots (close-up of right tails)
+ggplot(s1_math_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") + 
+  theme(axis.title = element_text(face="bold", size=14)) + 
+  theme(legend.text=element_text(size=14), 
+        legend.title = element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) + 
+  coord_cartesian(ylim=c(0, 0.01)) + 
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Mathematics by Gender (Right Tails)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+As with the histograms, the density plots clearly show that the distributions' right tail falls more heavily for men than for women. Overall, the plots depict the presence of a **substantial gender productivity gap among star performers** (i.e., elite performers) in the field of mathematics.
+
+## Study 2: Genetics
+In contrast to mathematics, the field of genetics has one of the greatest concentrations of women across STEM fields (National Science Foundation, 2016). Study 2 thus complemented Study 1 in that it involved a STEM field but one that may involve different gender dynamics and processes. The sample size for Study 2 was *N* = 45,007 unique researchers, of whom 14,685 (32.6%) were women.
+
+### Histograms
+
+As before, I started by creating the histograms:
+
+```{r S2 histograms}
+# Study 2 Histograms
+## Women
+hist_s2f <- ggplot(s2_gen_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 21000, 5000), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(0,130,20)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 21000), xlim = c(6.5, 130)) + 
+  ggtitle("Women's Publications in Genetics") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+# Men
+hist_s2m <- ggplot(s2_gen_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 21000, 5000), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(0,130,20)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 21000), xlim = c(6.5, 130)) + 
+  ggtitle("Men's Publications in Genetics") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Plotting
+grid.arrange(hist_s2f, hist_s2m, ncol = 2)
+```
+
+Next, zooming in on the histograms' right tails:
+
+```{r S2 histograms close}
+# Study 2 Histograms (close-up of right tails)
+## Women (pubs = 8 or more)
+hist_s2f_close <- ggplot(s2_gen_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 200, 20), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(8,128,20)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 200), xlim = c(13, 128)) + 
+  ggtitle("Women's Publications in Genetics
+          (8 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Men (pubs = 8 or more)
+hist_s2m_close <- ggplot(s2_gen_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_y_continuous(breaks=seq(0, 200, 20), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(8,128,20)) + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 200), xlim = c(13, 128)) + 
+  ggtitle("Men's Publications in Genetics
+          (8 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Plotting
+grid.arrange(hist_s2f_close, hist_s2m_close, ncol = 2)
+```
+
+In contrast with mathematics, there doesn't appear to be a substantial gender difference in the distributions' right tails.
+
+### Kernel Density Plots
+
+Next, the kernel density plots:
+
+```{r S2 KDE}
+# Study 2 Kernel density plots
+ggplot(s2_gen_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") + 
+  theme(axis.title = element_text(face="bold", size=14)) + 
+  theme(legend.text=element_text(size=14),
+        legend.title = element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) + 
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Genetics by Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+And a close-up of the right tails:
+
+```{r S2 KDE close}
+# Study 2 Kernel density plots (close-up of right tails)
+ggplot(s2_gen_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) + 
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") + 
+  theme(axis.title = element_text(face="bold", size=14)) +
+  theme(legend.text=element_text(size=13), 
+        legend.title = element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) + 
+  coord_cartesian(ylim=c(0, 0.0005)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Genetics by Gender (Right Tails)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+Again, visually, there is **no clear indication of a gender productivity gap in genetics**.
+
+
+## Study 3: Applied Psychology and Mathematical Psychology
+
+For Study 3, I examined researchers in two psychology sub-fields: applied psychology and mathematical psychology. I chose to focus on these fields because they are closely related to my own research field, management, and are thus relevant for the *JAP* readership. 
+
+Regarding the sample sizes for Study 3, there were 4,081 applied psychology researchers, of whom 1,595 (39.1%) were women. In addition, there were 6,337 mathematical psychology researchers, of whom 2,177 (34.4%) were women. The relative representation of women in these two non-STEM fields is similar to that in genetics as described in Study 2 (i.e., 32.6%) and clearly larger than that in mathematics as described in Study 1 (i.e., 9.3%).
+
+### Histograms for Applied Psychology
+
+As before, I started by creating histograms:
+
+```{r S3a histograms}
+# Study 3a Histograms
+## Women
+hist_s3af <- ggplot(s3_app_psy_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") + 
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 1600, 200), expand = c(0,0)) + 
+  scale_x_continuous(breaks = seq(0,36,5)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) + 
+  coord_cartesian(ylim=c(0, 1600), xlim = c(2.3, 36)) + 
+  ggtitle("Women's Publications in
+  Applied Pyschology") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Men
+hist_s3am <- ggplot(s3_app_psy_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 1600, 200), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(0,36,5)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 1600), xlim = c(2.3, 36)) + 
+  ggtitle("Men's Publications in
+  Applied Pyschology") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Plotting
+grid.arrange(hist_s3af, hist_s3am, ncol = 2)
+```
+
+And then a close-up of the right tails:
+
+```{r S3a histograms close}
+# Study 3a Histograms (close-up of right tails)
+## Women (pubs = 4 or more)
+hist_s3af_close <- ggplot(s3_app_psy_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 120, 20), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(4,36,4)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 120), xlim = c(5.1, 36)) + 
+  ggtitle("Women's Publications in
+  Applied Pyschology (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Men (pubs = 4 or more)
+hist_s3am_close <- ggplot(s3_app_psy_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 120, 20), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(4,36,4)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 120), xlim = c(5.1, 36)) + 
+  ggtitle("Men's Publications in
+  Applied Pyschology (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11))
+## Plotting
+grid.arrange(hist_s3af_close, hist_s3am_close, ncol = 2)
+```
+
+As shown, the distributions' right tail falls more heavily for men than for women, implying the presence of a gender gap in favor of men at the highest ranges of performance.
+
+### Kernel Density Plots for Applied Psychology
+
+Next, the kernel density plots:
+
+```{r S3a KDE}
+# Study 3a Kernel density plots
+ggplot(s3_app_psy_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"),
+        axis.line = element_line(color = "black")) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") +
+  theme(axis.title = element_text(face="bold", size=14)) +
+  theme(axis.text = element_text(size=13)) +
+  theme(legend.text=element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  coord_cartesian(xlim=c(1, 35)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Applied Psychology by Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+And a close-up of the right tails:
+
+```{r S3a KDE close}
+# Study 3a Kernel density plots (close-up of right tails)
+ggplot(s3_app_psy_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"),
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") +
+  theme(axis.title = element_text(face="bold", size=14)) + 
+  theme(axis.text = element_text(size=13)) +
+  theme(legend.text=element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  coord_cartesian(ylim=c(0, 0.01), xlim=c(1,35)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Applied Psychology by Gender (Right Tails)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+As with the histograms, the density plots show that the distribution has a heavier right tail for men than for women. Overall, the plots indicate that there is a **substantial gender productivity gap among star performers** (i.e., elite performers) in the field of applied psychology.
+
+### Histograms for Mathematical Psychology
+
+Lastly, looking at mathematical psychology:
+
+```{r S3b histograms}
+# Study 3b Histograms
+## Women
+hist_s3bf <- ggplot(s3_mat_psy_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 2100, 200), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(0,32,4)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 1800), xlim = c(2, 32)) + 
+  ggtitle("Women's Publications in
+  Mathematical Psychology") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Men
+hist_s3bm <- ggplot(s3_mat_psy_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 1800, 200), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(0,32,4)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 1800), xlim = c(2, 32)) + 
+  ggtitle("Men's Publications in
+  Mathematical Psychology") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=11)) 
+## Plotting
+grid.arrange(hist_s3bf, hist_s3bm, ncol = 2)
+```
+
+And a close-up of the right tails:
+
+```{r S3b histograms close}
+# Study 3b Histograms (close-up of right tails)
+## Women (pubs = 4 or more)
+hist_s3bf_close <- ggplot(s3_mat_psy_f, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="palegreen") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"),
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 140, 20), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(4,32,2)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 140), xlim = c(4.9, 32)) +
+  ggtitle("Women's Publications in
+          Mathematical Psychology (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=10)) 
+## Men (pubs = 4 or more)
+hist_s3bm_close <- ggplot(s3_mat_psy_m, aes(TotalPubs)) + 
+  geom_histogram(binwidth = 1, color="black", fill="darkblue") +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"), 
+        axis.line = element_line(color = "black")) +
+  scale_y_continuous(breaks=seq(0, 140, 20), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(4,32,2)) + 
+  theme(axis.title = element_text(face="bold", size=10)) +
+  labs(x= "Publications", y = "Frequency") + 
+  theme(axis.title = element_text(face="bold", size=10)) + 
+  theme(axis.text = element_text(size=10)) +
+  coord_cartesian(ylim=c(0, 140), xlim = c(4.9, 32)) + 
+  ggtitle("Men's Publications in
+          Mathematical Psychology (4 or more)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=10)) 
+## Plotting
+grid.arrange(hist_s3bf_close, hist_s3bm_close, ncol = 2)
+```
+
+So in mathematical psychology, too, the distributions' right tail falls more heavily for men than for women, implying the presence of a gender productivity gap in favor of men.
+
+### Kernel density plots for mathematical psychology
+
+Next, the kernel density plots:
+
+```{r S3b KDE}
+# Study 3b Kernel density plots
+ggplot(s3_mat_psy_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"),
+        axis.line = element_line(color = "black")) + 
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x= "Publications", y = "Density") +
+  theme(axis.title = element_text(face="bold", size=14)) + 
+  theme(axis.text = element_text(size=13)) +
+  theme(legend.text=element_text(size=14)) + 
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Mathematical Psychology by Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+And finally a close up of the right tails:
+
+```{r kde S3b close}
+# Study 3b Kernel density plots (close-up of right tails)
+ggplot(s3_mat_psy_all, aes(TotalPubs, fill=Gender, color=Gender))+
+  geom_density(bw=1, lwd=0.8, alpha=0.3) +
+  theme(panel.background = element_blank(), 
+        axis.text = element_text(color="black"),
+        axis.line = element_line(color = "black")) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) + 
+  labs(x= "Publications", y = "Density") +
+  theme(axis.title = element_text(face="bold", size=14)) +
+  theme(axis.text = element_text(size=13)) +
+  theme(legend.text=element_text(size=14)) +
+  theme(legend.title=element_blank(), legend.position=c(.9,.60)) +
+  coord_cartesian(ylim=c(0, 0.01)) + 
+  scale_fill_manual(values = c("palegreen","darkblue")) +
+  scale_color_manual(values = c("green4","darkblue")) + 
+  ggtitle("Publications in Mathematical Psychology by Gender (Right Tails)") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=14))
+```
+
+Like the histograms, the density plots imply the presence of a a **substantial gender productivity gap among star performers** (i.e., elite performers) in the field of mathematical psychology.
+
+Overall, the visual comparisons indicated the presence of substantial gender productivity gaps at high ranges of productivity in the fields of mathematics, applied psychology, and mathematical psychology, but not in genetics. 
+
+If you are interested in my subsequent statistical analyses into the distributions' properties, in addition to all of the study findings and theory development, please check out the full, published article in my GitHub portfolio: (1) [link to the published article](https://github.com/bloonsinthesky/Data-Science-Portfolio/raw/main/Gender%20Research%20Productivity%20Gap/Gender%20Productivity%20Gap%20among%20Stars_JAP%20Article.pdf), (2) [link to my portfolio](https://github.com/bloonsinthesky/Data-Science-Portfolio).
+
+Thank you very much!
+
+Young Hun Ji
