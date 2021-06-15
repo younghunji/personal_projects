@@ -40,7 +40,7 @@ Data files for all projects are available in their respective folders or, in the
     + [Fundamentals of Survey Resarch](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=1a568a28-4dd2-410a-9856-ad4800b46411)
     + [Introduction to IBM SPSS](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=08f27ca7-493c-4078-855b-acb600eb986e)
     
-  + Discussant (i.e., secondary lecturer)
+  + Secondary lecturer
     + [Assumptions of Linear Regression](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=10962a91-ba43-4c0f-828a-ad4800b6ade4)
     + [Research Design](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=0b8ad79a-e0e8-41c5-b052-ad4800b6bec3) 
   
