@@ -46,6 +46,6 @@ Data files for all projects are available in their respective folders or, in the
   
   *Tools: IBM SPSS*
   
-  I have also produced numerous academic research outputs, including publications and conference presentations, in which I have performed the leading role in data collection, data analysis, and paper writing. In my research, I use statiscal techniques frequently utilized in the social sciences but less common in data science, such as structural equation modeling and multilevel modeling. These works are available in a separate repository: [Academic Publications and Presentations]
+I have also produced numerous academic research outputs, including publications and conference presentations, in which I have performed the leading role in data collection, data analysis, and paper writing. In my research, I use statiscal techniques frequently utilized in the social sciences but less common in data science, such as structural equation modeling and multilevel modeling. These works are available in a separate repository: [Academic Publications and Presentations]
   
-  Thank you for your interest in my work. If you would like to chat about my portfolio, professional opportunities, or collaboration, please message me on LinkedIn: https://www.linkedin.com/in/younghunji/.
+Thank you for your interest in my work. If you would like to chat about my portfolio, professional opportunities, or collaboration, please message me on LinkedIn: https://www.linkedin.com/in/younghunji/.
