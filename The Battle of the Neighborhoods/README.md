@@ -10,7 +10,8 @@ The criteria used to determine the "optimal" neighborhood cluster was based on s
 * High concentration of restaurants
 * Low concentration of pre-existing cafés
 
-After gathering neighborhood data regarding each of the above, I used *k*-means clustering to segment the neighborhoods into four clusters. The decision to use *k* = 4 clusters was based on a comparison of *inertia* and *silhouette* scores across a range of *k* values.
+
+Population-related data was obtained from the **Tilastokeskus** (or **Statistics Finland**) website, and venue-related data was obtained using the **Foursquare API**. After gathering neighborhood data regarding each of the above, I used *k*-means clustering to segment the neighborhoods into four clusters. The decision to use *k* = 4 clusters was based on a comparison of *inertia* and *silhouette* scores across a range of *k* values.
 
 Finally, I ranked the emerging clusters based on the **new café's estimated annual revenue in each cluster**. The annual revenue estimated were computed using a formula based on a set of mathematical assumptions regarding each of the features' impact on revenue. According to the results, the neighborhood cluster consisting of **Sörnäinen** and **Punavuori** are the optimal new café locations in Helsinki.
 
