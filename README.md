@@ -28,7 +28,7 @@ Data files for all projects are available in their respective folders or, in the
   
   + [Visualizing Tesla and GameStop Stock Data](https://github.com/bloonsinthesky/Data-Science-Portfolio/tree/main/Visualizing%20Tesla%20and%20GameStop%20Stock%20Data): I used *yfinance* to extract the Tesla (TSLA) and GameStop (GME) stock data. I also used *beautiful soup* to scrape revenue data for the two companies. View [ *[notebook](https://nbviewer.jupyter.org/github/bloonsinthesky/Data-Science-Portfolio/blob/main/Visualizing%20Tesla%20and%20GameStop%20Stock%20Data/Visualizing%20Tesla%20and%20GameStop%20Stock%20Data.ipynb)* ]
 
-  *Tools: GGPlot, Tableau, Cognos, Plotly, Dash, BeautifulSoup*
+  *Tools: GGPlot2, SQL, Tableau, Cognos, Plotly, Dash, BeautifulSoup*
 
 + ### Teaching About Data
   Since 2019, I have been the responsible teacher for the master's course *Doing Quantitative Research* at Aalto University School of Business. In 2020, due to the pandemic, the course was conducted fully online via pre-recorded lectures and live Zoom sessions. 
