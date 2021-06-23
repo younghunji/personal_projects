@@ -1,6 +1,6 @@
 # Data-Science-Portfolio
 
-### **UPDATE: Please view my new portfolio website hosted on GitHub Pages: [Portfolio website](https://bloonsinthesky.github.io/)**
+### **UPDATE: Please view my new portfolio website published on GitHub Pages: [Portfolio website](https://bloonsinthesky.github.io/)**
 
 This repository contains a portfolio of my data science and analytics projects completed for professional, research, and learning purposes. Projects are presented in the form of Jupyter notebooks, R markdown files (published at RPubs), online dashboard apps, written reports, powerpoint slides, and video lectures.
 
