@@ -38,13 +38,13 @@ Data files for all projects are available in their respective folders or, in the
   Below are five pre-recorded lectures from 2020:
   
   + Main Lecturer
-    + [Logistic Regression, Mediation, and Moderation](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=bcfed629-80b2-4c56-b2d3-acb600eb97a9)
-    + [Fundamentals of Survey Resarch](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=1a568a28-4dd2-410a-9856-ad4800b46411)
-    + [Introduction to IBM SPSS](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=08f27ca7-493c-4078-855b-acb600eb986e)
+    + [Logistic Regression, Mediation, and Moderation](https://youtu.be/xnoyWw3QnlI)
+    + [Fundamentals of Survey Resarch](https://youtu.be/FyC3LbO0EYA)
+    + [Introduction to IBM SPSS](https://youtu.be/IDmYNgflVOg)
     
   + Secondary Lecturer
-    + [Assumptions of Linear Regression](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=10962a91-ba43-4c0f-828a-ad4800b6ade4)
-    + [Research Design](https://aalto.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=0b8ad79a-e0e8-41c5-b052-ad4800b6bec3) 
+    + [Assumptions of Linear Regression](https://youtu.be/IDmYNgflVOg)
+    + [Research Design](https://youtu.be/UD8m5L34Tzk) 
   
 I've also been involved in numerous **academic research** projects in which I performed the leading role in data collection, data analysis, paper writing, and presenting. In my research, I use statistical techniques frequently utilized in the social sciences but less common in data science, such as *structural equation modeling*, *multilevel modeling*, *allometric modeling*, and *social network analysis* on survey and randomized experiment data sets. You can view these outputs in a separate repository: [Academic Publications and Presentations](https://github.com/bloonsinthesky/academic-papers-and-presentations)
   
