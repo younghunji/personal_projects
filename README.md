@@ -1,4 +1,4 @@
-# Data-Science-Portfolio
+# Data-Science-And-Analytics-Portfolio
 
 ### **UPDATE: Please view my new portfolio website published on GitHub Pages: [Portfolio website](https://bloonsinthesky.github.io/)**
 
