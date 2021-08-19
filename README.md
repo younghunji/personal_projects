@@ -43,7 +43,7 @@ Data files for all projects are available in their respective folders or, in the
     + [Introduction to IBM SPSS](https://youtu.be/IDmYNgflVOg)
     
   + Secondary Lecturer
-    + [Assumptions of Linear Regression](https://youtu.be/IDmYNgflVOg)
+    + [Assumptions of Linear Regression](https://youtu.be/SRo6wAkYcn8)
     + [Research Design](https://youtu.be/UD8m5L34Tzk) 
   
 I've also been involved in numerous **academic research** projects in which I performed the leading role in data collection, data analysis, paper writing, and presenting. In my research, I use statistical techniques frequently utilized in the social sciences but less common in data science, such as *structural equation modeling*, *multilevel modeling*, *allometric modeling*, and *social network analysis* on survey and randomized experiment data sets. You can view these outputs in a separate repository: [Academic Publications and Presentations](https://github.com/bloonsinthesky/academic-papers-and-presentations)
